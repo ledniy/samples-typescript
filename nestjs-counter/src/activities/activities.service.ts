@@ -1,10 +1,15 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import axios from 'axios';
 
 @Injectable()
 export class ActivitiesService {
+  constructor(private readonly httpService: HttpService) {}
+
   async persist(value: number): Promise<unknown> {
-    const res = await axios.post('http://httpbin.org/post', { value });
+    const res = await this.httpService.axiosRef.post(
+      'http://httpbin.org/post',
+      { value },
+    );
 
     return res.data;
   }

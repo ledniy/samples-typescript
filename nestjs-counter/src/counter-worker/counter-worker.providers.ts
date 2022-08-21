@@ -14,7 +14,9 @@ export const counterWorkerProviders = [
         ),
       });
 
-      const activities = activitiesService as unknown as ActivityInterface;
+      const activities = {
+        persist: activitiesService.persist.bind(activitiesService),
+      } as unknown as ActivityInterface;
 
       const worker = await Worker.create({
         workflowsPath: require.resolve('../temporal/workflows'),
